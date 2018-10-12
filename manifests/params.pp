@@ -1,6 +1,7 @@
 # See README.md for details.
 class openldap::params {
   $server_package_ensure = 'present'
+  $utils_package_ensure  = 'present'
   case $::osfamily {
     'Debian': {
       $client_package           = 'libldap-2.4-2'
