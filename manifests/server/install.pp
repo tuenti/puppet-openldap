@@ -26,7 +26,7 @@ class openldap::server::install {
   }
 
   package { $::openldap::server::package:
-    ensure       => present,
+    ensure       => $::openldap::server::package_ensure,
     responsefile => $responsefile,
   }
 }
