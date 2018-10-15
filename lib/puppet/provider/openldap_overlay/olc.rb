@@ -113,22 +113,22 @@ Puppet::Type.
   end
 
   def getDn(suffix)
-    # if suffix == 'cn=config'
-    #   if "#{resource[:overlay]}" == "rwm"
-    #     slapcat("(olcDatabase=relay)").split("\n").collect do |line|
-    #       if line =~ /^dn: /
-    #         return line.split(' ')[1]
-    #       end
-    #     end
-    #   else
-    #     return 'olcDatabase={0}config,cn=config'
-    #   end
-    # else
+    if suffix == 'cn=config'
+      if "#{resource[:overlay]}" == "rwm"
+        slapcat("(olcDatabase=#{suffix})").split("\n").collect do |line|
+          if line =~ /^dn: /
+            return line.split(' ')[1]
+          end
+        end
+      else
+        return 'olcDatabase={0}config,cn=config'
+      end
+    else
       slapcat("(olcSuffix=#{suffix})").split("\n").collect do |line|
         if line =~ /^dn: /
           return line.split(' ')[1]
         end
-      # end
+      end
     end
   end
 
