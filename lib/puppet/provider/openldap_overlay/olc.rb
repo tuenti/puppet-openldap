@@ -115,6 +115,12 @@ Puppet::Type.
   def getDn(suffix)
     if suffix == 'cn=config'
       if "#{resource[:overlay]}" == "rwm"
+        slapcat("(olcDatabase=relay)").split("\n").collect do |line|
+          if line =~ /^dn: /
+            return line.split(' ')[1]
+          end
+        end
+        # If no DN found on relay database, search in mdb database
         slapcat("(olcDatabase=mdb)").split("\n").collect do |line|
           if line =~ /^dn: /
             return line.split(' ')[1]
