@@ -150,6 +150,7 @@ Puppet::Type.
         return 'cn=config'
       elsif line =~ /^olcSuffix: / and found
         return line.split(' ')[1]
+      end
     end
   end
 
