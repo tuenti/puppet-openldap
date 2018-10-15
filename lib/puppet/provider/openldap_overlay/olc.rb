@@ -148,6 +148,8 @@ Puppet::Type.
         return 'cn=config'
       elsif database =~ /\{\d+\}relay$/
         return 'cn=config'
+      elsif database =~ /\{\d+\}mdb$/
+        return 'cn=config'
       elsif line =~ /^olcSuffix: / and found
         return line.split(' ')[1]
       end
