@@ -120,6 +120,12 @@ Puppet::Type.
             return line.split(' ')[1]
           end
         end
+        # If no DN found on relay database, search in mdb database
+        slapcat("(olcDatabase=mdb)").split("\n").collect do |line|
+          if line =~ /^dn: /
+            return line.split(' ')[1]
+          end
+        end
       else
         return 'olcDatabase={0}config,cn=config'
       end
